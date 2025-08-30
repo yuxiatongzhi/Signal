@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <sys/eventfd.h>
 #include <pthread.h>
+#include <inttypes.h>
 #include "signal_action.h"
 #include "signal_exception.h"
 #include "errno.h"
@@ -20,7 +21,7 @@ static jclass callClass;
 static void sig_func(int sig_num, struct siginfo *info, void *ptr) {
     uint64_t data;
     data = sig_num;
-    __android_log_print(ANDROID_LOG_INFO, TAG, "catch signal %llu %d", data,notifier);
+    __android_log_print(ANDROID_LOG_INFO, TAG, "catch signal %" PRIu64 " %d", data, notifier);
 
     if (notifier >= 0) {
         write(notifier, &data, sizeof data);
@@ -41,7 +42,7 @@ static void* invoke_crash(void *arg){
     (*env)->CallStaticVoidMethod(env,callClass, id,signal_tag,nativeStackTrace);
     (*env)->DeleteLocalRef(env,nativeStackTrace);
 
-
+    return NULL;
 }
 
 
@@ -65,7 +66,6 @@ Java_com_pika_lib_1signal_SignalController_initWithSignals(JNIEnv *env, jclass c
                                                               jintArray signals) {
     init_with_signal(env, clazz, signals, sig_func);
     notifier = eventfd(0,EFD_CLOEXEC);
-
 
     // 启动异步线程
     pthread_t thd;

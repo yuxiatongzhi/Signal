@@ -1,5 +1,12 @@
 pluginManagement {
     repositories {
+        maven { url "https://maven.aliyun.com/repository/central" }
+        maven { url "https://maven.aliyun.com/repository/public/" }
+        maven { url "https://maven.aliyun.com/repository/google/" }
+        maven { url "https://maven.aliyun.com/repository/releases" }
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin/" }	
+		maven { url "https://jitpack.io" }		
+	
         gradlePluginPortal()
         google()
         mavenCentral()
@@ -8,10 +15,19 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        maven { url "https://maven.aliyun.com/repository/central" }
+        maven { url "https://maven.aliyun.com/repository/public/" }
+        maven { url "https://maven.aliyun.com/repository/google/" }
+        maven { url "https://maven.aliyun.com/repository/releases" }
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin/" }		
+		maven { url "https://jitpack.io" }
+	
         google()
         mavenCentral()
     }
 }
 rootProject.name = "Signal"
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include ':app'
 include ':lib_signal'
